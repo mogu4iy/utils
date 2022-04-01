@@ -1,0 +1,52 @@
+{
+  "users": [
+    {
+      "name": "root",
+      "password": "root",
+      "tags": "administrator"
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "vhost"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "root",
+      "vhost": "vhost",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "default_exchange",
+      "vhost": "vhost",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "queues": [
+    {
+      "name": "default_queue",
+      "vhost": "alfex",
+      "durable": true,
+      "auto_delete": false
+    }
+  ],
+  "bindings": [
+    {
+      "source": "default_exchange",
+      "vhost": "alfex",
+      "destination": "default_queue",
+      "destination_type": "queue",
+      "routing_key": "default_routing_key",
+      "arguments": {}
+    }
+  ]
+}

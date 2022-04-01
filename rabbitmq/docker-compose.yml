@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    restart: unless-stopped
+    tty: true
+    environment:
+      RABBITMQ_DEFAULT_VHOST: default_vhost
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - "./rabbitmq-definitions.json:/etc/rabbitmq/definitions.json"
+      - "./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf"
+      - "rabbitmq_etc:/etc/rabbitmq/"
+      - "rabbitmq_data:/var/lib/rabbitmq/"
+      - "rabbitmq_log:/var/log/rabbitmq/"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+volumes:
+  rabbitmq_etc:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  rabbitmq_log:
+    driver: local
